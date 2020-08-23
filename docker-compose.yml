@@ -3,29 +3,27 @@ version: "3.3"
 services:
 
   database:
-    container_name: database
-    build:
-      dockerfile: ./docker/Dockerfile.database
-    environment:
-      - MYSQL_DATABASE=lumen-api
-      - MYSQL_USER=deverso
-      - MYSQL_PASSWORD=deverso
-      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+    container_name: mysql
+    image: mysql:5.7
+    restart: always
     ports:
       - "3306:3306"
-    volumes:
-      - db-volume:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: lumen-api
 
   api:
     container_name: api
-    image: webdevops/php-nginx:alpine-php7
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile.nginx
     environment:
-      - WEB_DOCUMENT_ROOT=/tmp/web/
+      - WEB_DOCUMENT_ROOT=/www
       - WEB_DOCUMENT_INDEX=index.php
     ports:
       - "80:80"
     volumes:
-      - ./app:/tmp/web
+      - ./api:/www
     depends_on:
       - database
 

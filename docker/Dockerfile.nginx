@@ -1,0 +1,9 @@
+FROM webdevops/php-nginx:alpine-php7
+
+COPY . /www
+
+RUN ls www
+
+WORKDIR /www/api
+
+RUN composer install --prefer-dist
