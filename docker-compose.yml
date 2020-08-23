@@ -18,12 +18,12 @@ services:
       context: ./
       dockerfile: ./docker/Dockerfile.nginx
     environment:
-      - WEB_DOCUMENT_ROOT=/www
+      - WEB_DOCUMENT_ROOT=/www/api/public
       - WEB_DOCUMENT_INDEX=index.php
     ports:
       - "80:80"
     volumes:
-      - ./api:/www
+      - ./:/www
     depends_on:
       - database
 

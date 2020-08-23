@@ -1,9 +1,7 @@
 FROM webdevops/php-nginx:alpine-php7
 
-COPY . /www
-
-RUN ls www
+COPY ./ /www
 
 WORKDIR /www/api
 
-RUN composer install --prefer-dist
+RUN composer install
