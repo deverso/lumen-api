@@ -2,6 +2,6 @@ FROM webdevops/php-nginx:alpine-php7
 
 COPY ./ /www
 
-WORKDIR /www/api
+WORKDIR /www/
 
-RUN composer install
+RUN bash composer-install.sh
