@@ -14,9 +14,7 @@ services:
 
   api:
     container_name: api
-    build:
-      context: ./
-      dockerfile: ./docker/Dockerfile.nginx
+    image: webdevops/php-nginx:alpine-php7
     environment:
       - WEB_DOCUMENT_ROOT=/www/api/public
       - WEB_DOCUMENT_INDEX=index.php
