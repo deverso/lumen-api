@@ -11,6 +11,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: lumen-api
+    volumes:
+      - db-volume:/var/lib/mysql
 
   api:
     container_name: api
@@ -24,6 +26,18 @@ services:
       - ./:/www
     depends_on:
       - database
+
+  # pma:
+  #   container_name: pma
+  #   image: phpmyadmin/phpmyadmin
+  #   environment: 
+  #     - MYSQL_ROOT_PASSWORD=root
+  #     - PMA_HOST=database
+  #     - PMA_PORTS=3306      
+  #   ports:
+  #     - "80:80"
+  #   depends_on: 
+  #     - database
 
 volumes:
   db-volume:

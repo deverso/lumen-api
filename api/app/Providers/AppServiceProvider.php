@@ -13,6 +13,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind('App\Repositories\TransactionInterface', 'App\Repositories\TransactionEloquent');
+        $this->app->bind('App\Repositories\UserInterface', 'App\Repositories\UserEloquent');
+        $this->app->bind('App\Repositories\WalletInterface', 'App\Repositories\WalletEloquent');
+
     }
 }
