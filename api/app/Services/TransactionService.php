@@ -49,8 +49,8 @@ class TransactionService
                 $transaction = $this->transactionRepository->add($request);
 
                 if ($transaction) {
-                    $this->walletService->changeFunds($payer_wallet->id, 'remove', $transaction->value);
-                    $this->walletService->changeFunds($transaction->payee, 'pendent', $transaction->value); //refazer
+                    $this->walletService->changeFunds($transaction->payerDetail->wallet->id, 'remove', $transaction->value);
+                    $this->walletService->changeFunds($transaction->payeeDetail->wallet->id, 'pendent', $transaction->value);
                     Queue::push(new NotifyPaymentJob);
                     return response()->json($transaction, Response::HTTP_CREATED);
                 } else {
