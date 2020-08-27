@@ -5,14 +5,16 @@ namespace App\Services;
 use App\Repositories\WalletInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Database\QueryException;
+use App\Strategy\Transactions\ChangeFundsStrategy;
 
 class WalletService
 {
-    private $walletRepository;
+    private $walletRepository, $changeFunds;
 
-    public function __construct(WalletInterface $walletRepository)
+    public function __construct(WalletInterface $walletRepository, ChangeFundsStrategy $changeFunds)
     {
         $this->walletRepository = $walletRepository;
+        $this->changeFunds = $changeFunds;
     }
 
     public function changeFunds($id, $type, $amount)
@@ -43,6 +45,8 @@ class WalletService
                     return false;
                     break;
             }
+
+            $data = $this->changeFunds($wallet, $amount, $type);
 
             if ($this->walletRepository->changeFunds($wallet->id, $data)) {
                 return response()->json($wallet, Response::HTTP_CREATED);
